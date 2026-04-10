@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.letssopt
 
 
 import android.os.Bundle
@@ -12,7 +12,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.example.letssopt.LoginTextField
 
 class RegisterActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

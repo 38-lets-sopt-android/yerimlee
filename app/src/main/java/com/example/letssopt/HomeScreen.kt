@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -45,7 +46,7 @@ fun HomeScreen(
 ) {
 
     LazyColumn (
-        modifier= Modifier
+        modifier= modifier
             .fillMaxSize()
             .background(Color.Black)
     ) {
@@ -106,20 +107,17 @@ fun HomeScreen(
                     fontWeight = FontWeight.W600,
                     fontFamily = FontFamily(
                         Font(R.font.pretendard_semibold)
-                    ),
-
-
-                    )
-
-                Text(
-                    text = "예능부터 드라마까지!",
-                    color = Color(0xBABAC1),
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.W600,
-                    fontFamily = FontFamily(
-                        Font(R.font.pretendard_semibold)
                     )
                 )
+                Text(
+                    text = "예능부터 드라마까지!",
+                    color = Color(0xFFBABAC1),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    fontFamily = FontFamily(Font(R.font.pretendard_semibold))
+                )
+
+
             }
         }
 
@@ -159,40 +157,71 @@ fun HomeScreen(
 }
 
 
-    @Composable
-    fun MovieScreen(content: Contents) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            if (content.titleImage != null) {
-
-                Image(
-                    painter= painterResource(id= content.titleImage),
-                    contentDescription = null
-                )
-            }
-            else{
-
-                Text (text= content.title, color = Color.White)
-            }
-            if (content.subtitle != null) {
-                Text(text = content.subtitle,
-                    color= Color(0xFF999999)
-                )
-            }
-            LazyRow (
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                contentPadding = PaddingValues(horizontal = 8.dp)
+@Composable
+fun MovieScreen(content: Contents) {
+    Column(
+        modifier = Modifier
+            .padding(start = 8.dp)
+            .padding(top = 8.dp)
+    ) {
+        if (content.titleImage != null) {
+            Image(
+                painter = painterResource(id = content.titleImage),
+                contentDescription = null,
+                modifier = Modifier
+                    .width(80.dp)
+                    .height(26.dp)
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                items(content.images) { imageRes ->
-                    Image(
-                        painter = painterResource(id = imageRes),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .width(content.imageWidth.dp)
-                            .height(content.imageHeight.dp)
-
+                if (content.subtitle != null) {
+                    Text(
+                        text = content.subtitle,
+                        color = Color(0xFF999999),
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.SemiBold
                     )
                 }
+                Text("더보기", color = Color.Gray, fontSize = 12.sp)
+            }
+        } else {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = content.title,
+                    color = Color.White,
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Text("더보기", color = Color.Gray, fontSize = 12.sp)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            contentPadding = PaddingValues(horizontal = 8.dp)
+        ) {
+            items(content.images) { imageRes ->
+                Image(
+                    painter = painterResource(id = imageRes),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .width(content.imageWidth.dp)
+                        .height(content.imageHeight.dp)
+                )
             }
         }
     }
-
+}

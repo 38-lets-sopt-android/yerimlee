@@ -2,6 +2,7 @@ package com.example.letssopt
 
 import android.content.Context
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,11 +26,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun LoginScreen(onLoginSuccess: () -> Unit) {
+fun LoginScreen(onLoginSuccess: () -> Unit , onNavigateToSignUp: () -> Unit) {
     var id by remember { mutableStateOf("") }
     var pw by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -41,7 +43,7 @@ fun LoginScreen(onLoginSuccess: () -> Unit) {
     ) {
         Text(
             text = "watcha",
-            color = Color(0xFF800020),
+            color = Color(0xFFE8003C),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 70.dp)
@@ -126,6 +128,19 @@ fun LoginScreen(onLoginSuccess: () -> Unit) {
 
         Spacer(modifier = Modifier.weight(1f))
 
+        Text(
+            text = "아직 계정이 없으신가요? 회원가입",
+            color = Color.Gray,
+            fontSize = 14.sp,
+            textAlign = TextAlign.Center,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+                .clickable {
+                    onNavigateToSignUp()
+                }
+        )
+
         Button(
             onClick = {
                 saveLoginState(context)
@@ -154,4 +169,14 @@ fun saveLoginState(context: Context) {
 fun isLoggedIn(context: Context): Boolean {
     val prefs = context.getSharedPreferences("login", Context.MODE_PRIVATE)
     return prefs.getBoolean("isLoggedIn", false)
+}
+
+@Preview
+@Composable
+
+fun LoginScreenPreview(){
+    LoginScreen(
+        onLoginSuccess = {},
+        onNavigateToSignUp = {}
+    )
 }

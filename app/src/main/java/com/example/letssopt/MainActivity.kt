@@ -30,18 +30,34 @@ class MainActivity : ComponentActivity() {
 fun AppStartScreen() {
 
     val context= LocalContext.current
-    var isLoggedIn by remember { mutableStateOf(false) }
+    var isLoggedIn by remember { mutableStateOf(isLoggedIn(context)) }
 
-    if (isLoggedIn){
-        MainScreen()
+    var showSignUpScreen by remember {
+        mutableStateOf(false)
     }
 
-    else {
+    if (isLoggedIn) {
 
-        LoginScreen(
-            onLoginSuccess= {
-                isLoggedIn= true
-            }
-        )
+        MainScreen()
+
+    } else {
+
+        if (showSignUpScreen) {
+
+            SignUpScreen()
+
+        } else {
+
+            LoginScreen(
+
+                onLoginSuccess = {
+                    isLoggedIn = true
+                },
+
+                onNavigateToSignUp = {
+                    showSignUpScreen = true
+                }
+            )
+        }
     }
 }
